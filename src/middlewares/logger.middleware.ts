@@ -1,7 +1,8 @@
 import { Injectable, Logger, NestMiddleware } from '@nestjs/common';
 import { NextFunction, Request, Response } from 'express';
 
-@Injectable()
+@Injectable() // DI (Dependency Injection)를 위한 데코레이터
+// module의 provider에 넣어주면 다른 곳에서 사용할 수 있게 된다.
 export class LoggerMiddleware implements NestMiddleware {
   private logger = new Logger('HTTP');
 
