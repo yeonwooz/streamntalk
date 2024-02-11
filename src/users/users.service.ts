@@ -3,5 +3,5 @@ import { JoinRequestDto } from './dto/join.request.dto';
 
 @Injectable()
 export class UsersService {
-  postUsers(data: JoinRequestDto) {}
+  createUser(data: JoinRequestDto) {}
 }

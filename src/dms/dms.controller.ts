@@ -9,5 +9,5 @@ export class DmsController {
   }
 
   @Post(':id/chats')
-  postChat(@Body() body) {}
+  createChat(@Body() body) {}
 }

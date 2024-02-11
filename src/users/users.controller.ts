@@ -13,7 +13,7 @@ export class UsersController {
 
   @Post()
   postUsers(@Body() data: JoinRequestDto) {
-    this.userService.postUsers(data);
+    this.userService.createUser(data);
   }
 
   @Post('login')
