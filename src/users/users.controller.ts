@@ -1,13 +1,26 @@
 import { Body, Controller, Get, Post, Req, Res } from '@nestjs/common';
 import { JoinRequestDto } from './dto/join.request.dto';
 import { UsersService } from './users.service';
-import { ApiBody, ApiOperation } from '@nestjs/swagger';
+import { ApiBody, ApiOperation, ApiResponse, ApiTags } from '@nestjs/swagger';
+import { UserDto } from './dto/user.dto';
+import { ResponseErrorDto } from 'src/common.dto';
 
+@ApiTags('users')
 @Controller('api/users')
 export class UsersController {
   constructor(private userService: UsersService) {}
 
   @ApiOperation({ summary: '내 정보 조회' })
+  @ApiResponse({
+    status: 200,
+    description: '성공',
+    type: UserDto,
+  })
+  @ApiResponse({
+    status: 500,
+    description: '서버에러',
+    type: ResponseErrorDto,
+  })
   @Get()
   getUsers(@Req() req) {
     return req.user;
@@ -20,6 +33,11 @@ export class UsersController {
     this.userService.createUser(data);
   }
 
+  @ApiResponse({
+    status: 200,
+    description: '성공',
+    type: UserDto,
+  })
   @ApiOperation({ summary: '로그인' })
   @Post('login')
   logIn() {}
