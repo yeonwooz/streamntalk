@@ -8,15 +8,17 @@ import { ChannelsModule } from './channels/channels.module';
 import { DmsModule } from './dms/dms.module';
 import { WorkspacesModule } from './workspaces/workspaces.module';
 import { TypeOrmModule } from '@nestjs/typeorm';
+import { ChannelChats } from './entities/ChannelChats';
+import { ChannelMembers } from './entities/ChannelMembers';
+import { Channels } from './entities/Channels';
+import { DMs } from './entities/DMs';
+import { Mentions } from './entities/Mentions';
 import { Users } from './entities/Users';
-
+import { WorkspaceMembers } from './entities/WorkspaceMembers';
+import { Workspaces } from './entities/Workspaces';
 @Module({
   imports: [
     ConfigModule.forRoot({ isGlobal: true }),
-    UsersModule,
-    ChannelsModule,
-    DmsModule,
-    WorkspacesModule,
     TypeOrmModule.forRoot({
       type: 'mysql',
       host: 'localhost',
@@ -24,13 +26,26 @@ import { Users } from './entities/Users';
       username: process.env.DB_USERNAME,
       password: process.env.DB_PASSWORD,
       database: process.env.DB_DATABASE,
-      autoLoadEntities: true,
-      synchronize: false, // 데이터 자동 유실 방지
+      entities: [
+        ChannelChats,
+        ChannelMembers,
+        Channels,
+        DMs,
+        Mentions,
+        Users,
+        WorkspaceMembers,
+        Workspaces,
+      ],
       keepConnectionAlive: true, // 핫리로드로 서버기 종료 되더라도 DB서버 연결유지
+      migrations: [`${__dirname}/src/migrations/*.ts`],
+      charset: 'utf8mb4_general_ci',
+      synchronize: false, // 데이터 자동 유실 방지
       logging: true,
-      charset: 'utf8mb4', // 이모티콘 지원
     }),
-    TypeOrmModule.forFeature([Users]),
+    UsersModule,
+    ChannelsModule,
+    DmsModule,
+    WorkspacesModule,
   ],
   controllers: [AppController],
   providers: [AppService, ConfigService],
