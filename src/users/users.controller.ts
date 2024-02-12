@@ -25,12 +25,12 @@ export class UsersController {
   @ApiResponse({
     status: 200,
     description: '성공',
-    type: UserDto,
+    type: () => [UserDto],
   })
   @ApiResponse({
     status: 500,
     description: '서버에러',
-    type: ResponseErrorDto,
+    type: () => [ResponseErrorDto],
   })
   @Get()
   getUsers(@User() user) {
@@ -38,7 +38,7 @@ export class UsersController {
   }
 
   @ApiOperation({ summary: '회원가입' })
-  @ApiBody({ type: JoinRequestDto })
+  //   @ApiBody({ type: [JoinRequestDto] })
   @Post()
   postUsers(@Body() data: JoinRequestDto) {
     this.userService.createUser(data);
@@ -47,7 +47,7 @@ export class UsersController {
   @ApiResponse({
     status: 200,
     description: '성공',
-    type: UserDto,
+    type: () => [UserDto],
   })
   @ApiOperation({ summary: '로그인' })
   @Post('login')
