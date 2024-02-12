@@ -1,6 +1,6 @@
 // interface는 컴파일 후 런타임에 사라지지만, class는 남아있게 된다
 
-import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger';
+import { ApiProperty } from '@nestjs/swagger';
 
 // class를 사용하면 런타임에도 타입 정보를 사용할 수 있다
 export class JoinRequestDto {
@@ -23,9 +23,9 @@ export class JoinRequestDto {
   })
   public password: string;
 
-  @ApiPropertyOptional({
-    example: '01012345678',
-    description: '휴대폰 번호',
-  })
-  public phoneNumber: string;
+  //   @ApiPropertyOptional({
+  //     example: '01012345678',
+  //     description: '휴대폰 번호',
+  //   })
+  //   public phoneNumber: string;
 }
