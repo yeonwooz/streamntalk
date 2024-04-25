@@ -40,7 +40,7 @@ export class UsersController {
   @ApiOperation({ summary: '회원가입' })
   //   @ApiBody({ type: [JoinRequestDto] })
   @Post()
-  postUsers(@Body() data: JoinRequestDto) {
+  join(@Body() data: JoinRequestDto) {
     this.userService.createUser(data);
   }
 
