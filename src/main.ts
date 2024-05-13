@@ -2,12 +2,16 @@ import { NestFactory } from '@nestjs/core';
 import { SwaggerModule, DocumentBuilder } from '@nestjs/swagger';
 import { AppModule } from './app.module';
 import { HttpExceptionFilter } from './httpException.filter';
+import { ValidationPipe } from '@nestjs/common';
 
 declare const module: any;
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
   const port = process.env.PORT || 3000;
+
+  // class validator가 붙어있는 Dto 자동 검증
+  app.useGlobalPipes(new ValidationPipe());
 
   // HttpException 이 filter 인터셉터로 넘어가게 됨
   app.useGlobalFilters(new HttpExceptionFilter());

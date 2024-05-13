@@ -1,8 +1,4 @@
-import {
-  BadRequestException,
-  ConflictException,
-  Injectable,
-} from '@nestjs/common';
+import { ConflictException, Injectable } from '@nestjs/common';
 import { JoinRequestDto } from './dto/join.request.dto';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Users } from 'src/entities/Users';
@@ -19,15 +15,7 @@ export class UsersService {
 
   async createUser(data: JoinRequestDto) {
     const { email, password, nickname } = data;
-    if (!email) {
-      throw new BadRequestException('No email');
-    }
-    if (!nickname) {
-      throw new BadRequestException('No nickname');
-    }
-    if (!password) {
-      throw new BadRequestException('No password');
-    }
+
     const user = await this.usersRepository.findOne({ where: { email } });
     if (user) {
       throw new ConflictException('User already exists');

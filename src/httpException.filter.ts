@@ -14,11 +14,21 @@ export class HttpExceptionFilter implements ExceptionFilter {
     const response = ctx.getResponse<Response>();
     const status = exception.getStatus();
     const err = exception.getResponse() as
-      | string
-      | { error: string; statusCode: 400; message: string[] };
+      | string // 직접 발생시킨 에러
+      | { error: string; statusCode: 400; message: string[] }; // class-validator의 에러
 
-    console.log(status, err);
+    if (typeof err !== 'string' && err.error === 'Bad Request') {
+      return response.status(status).json({
+        success: false,
+        code: status,
+        data: err.message,
+      });
+    }
 
-    return response.status(status).json({ msg: err });
+    return response.status(status).json({
+      success: false,
+      code: status,
+      data: err,
+    });
   }
 }
