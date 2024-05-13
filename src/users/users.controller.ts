@@ -2,6 +2,7 @@ import {
   Body,
   Controller,
   Get,
+  HttpException,
   Post,
   Req,
   Res,
@@ -40,8 +41,8 @@ export class UsersController {
   @ApiOperation({ summary: '회원가입' })
   //   @ApiBody({ type: [JoinRequestDto] })
   @Post()
-  join(@Body() data: JoinRequestDto) {
-    this.userService.createUser(data);
+  async join(@Body() data: JoinRequestDto) {
+    await this.userService.createUser(data);
   }
 
   @ApiResponse({

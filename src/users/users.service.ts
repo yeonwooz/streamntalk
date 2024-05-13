@@ -1,4 +1,8 @@
-import { HttpException, Injectable } from '@nestjs/common';
+import {
+  BadRequestException,
+  ConflictException,
+  Injectable,
+} from '@nestjs/common';
 import { JoinRequestDto } from './dto/join.request.dto';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Users } from 'src/entities/Users';
@@ -16,17 +20,17 @@ export class UsersService {
   async createUser(data: JoinRequestDto) {
     const { email, password, nickname } = data;
     if (!email) {
-      throw new HttpException('No email', 400);
+      throw new BadRequestException('No email');
     }
     if (!nickname) {
-      throw new HttpException('No nickname', 400);
+      throw new BadRequestException('No nickname');
     }
     if (!password) {
-      throw new HttpException('No password', 400);
+      throw new BadRequestException('No password');
     }
     const user = await this.usersRepository.findOne({ where: { email } });
     if (user) {
-      throw new HttpException('User already exists', 409);
+      throw new ConflictException('User already exists');
     }
     const hashedPassword = await bcrypt.hash(password, 12);
     await this.usersRepository.save({
