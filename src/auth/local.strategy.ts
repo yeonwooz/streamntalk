@@ -17,6 +17,8 @@ export class LocalStrategy extends PassportStrategy(Strategy) {
     if (!user) {
       throw new UnauthorizedException();
     }
+
+    // req.logIn 으로감 (AuthGuard)
     return done(null, user);
   }
 }

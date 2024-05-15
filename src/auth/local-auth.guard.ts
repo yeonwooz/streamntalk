@@ -9,6 +9,8 @@ export class LocalAuthGuard extends AuthGuard('local') {
     if (can) {
       const request = context.switchToHttp().getRequest();
       console.log('login for cookie');
+
+      // strategy에서 넘어옴
       await super.logIn(request);
     }
 
